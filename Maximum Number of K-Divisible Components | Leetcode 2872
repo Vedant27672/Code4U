@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int DFS(int currNode, vector<vector<int>>& adj, vector<int>& values,
+            int& components, int& k, vector<bool>& visited, int parent = -1) {
+        long long sum = values[currNode];
+        for (auto neighbour : adj[currNode]) {
+            if (!visited[neighbour]) {
+                visited[neighbour] = true;
+                sum = sum + DFS(neighbour, adj, values, components, k, visited,
+                                currNode);
+            }
+        }
+        sum = sum % k;
+        if (sum == 0)
+            components++;
+        return sum;
+    }
+
+    int maxKDivisibleComponents(int n, vector<vector<int>>& edges,
+                                vector<int>& values, int k) {
+        vector<bool> visited(n, false);
+        vector<vector<int>> adj(n);
+
+        for (auto itr : edges) {
+            adj[itr[0]].push_back(itr[1]);
+            adj[itr[1]].push_back(itr[0]);
+        }
+
+        int components = 0;
+        visited[0] = true;
+        DFS(0, adj, values, components, k, visited);
+
+        return components;
+    }
+};
