@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int isPrefixOfWord(string sentence, string searchWord) {
+        int count = 1;
+        int n = sentence.length();
+
+        for(int i=0; i<n; i++) {
+            if(sentence[i] == ' '){
+                count++;
+            }
+            else if(sentence[i] == searchWord[0]) {
+                cout<<"found start at : "<<i<<endl;
+                string sen = sentence.substr(i, searchWord.length()); 
+                cout<<sen<<endl;
+                if(sen == searchWord && (i==0 || sentence[i-1]==' ' )) {
+                    return count;
+                }
+            }
+        }
+        return -1;
+    }
+};
