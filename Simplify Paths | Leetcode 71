@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> unix;
+        vector<string> simple;
+        int n = path.length();
+        string ans = "/";
+        string word = "";
+
+        for (char ch : path) {
+            if (ch != '/') {
+                word += ch;
+            } else {
+                if (word == "..") {
+                    if (simple.size() > 0) {
+                        simple.pop_back();
+                    }
+                } else if (word == "." || word == "") {
+                } else {
+                    simple.push_back(word);
+                }
+                word = "";
+            }
+        }
+
+        if (word == "..") {
+            if (simple.size() > 0) {
+                simple.pop_back();
+            }
+        } else if (word == "." || word == "") {
+        } else {
+            simple.push_back(word);
+        }
+        for (string s : simple) {
+            cout << s << " ";
+            ans = ans + s + "/";
+        }
+
+        if (ans.length() > 1)
+            ans.pop_back();
+
+        return ans;
+    }
+};
