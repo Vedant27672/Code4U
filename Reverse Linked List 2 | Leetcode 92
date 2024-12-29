@@ -1,0 +1,37 @@
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+
+        if(head->next == NULL) {
+            return head;
+        }
+
+        unordered_map <ListNode *, ListNode *> revList;
+        ListNode* temp = head;
+        int currPos = 0;
+        ListNode* rightPointer;
+        ListNode* leftPointer;
+
+        while(temp != NULL) {
+            currPos++;
+            revList[temp->next] = temp;
+            if(currPos == left) {
+                leftPointer = temp;
+            }
+            if(currPos == right) {
+                rightPointer = temp;
+            }
+            temp = temp->next;
+        }
+
+        while(left < right) {
+            swap(leftPointer->val, rightPointer->val);
+            leftPointer = leftPointer->next;
+            left++;
+            rightPointer = revList[rightPointer];
+            right--;
+        }
+
+        return head;
+    }
+};
