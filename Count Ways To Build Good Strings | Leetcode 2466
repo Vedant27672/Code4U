@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int mod = 1000000007;
+
+    unordered_map<int, int> dp;
+
+    int helper(int currlen, int& low, int& high, int& zero, int& one) {
+        if (currlen > high) {
+            return 0;
+        }
+        if (dp.find(currlen) != dp.end()) {
+            return dp[currlen];
+        }
+        int result = 0;
+        if (currlen >= low) {
+            result = 1;
+        }
+        result = (result + helper(currlen + zero, low, high, zero, one)) % mod;
+        result = (result + helper(currlen + one, low, high, zero, one)) % mod;
+        dp[currlen] = result;
+
+        return dp[currlen] % mod;
+    }
+
+    int countGoodStrings(int low, int high, int zero, int one) {
+
+        return helper(0, low, high, zero, one);
+    }
+};
