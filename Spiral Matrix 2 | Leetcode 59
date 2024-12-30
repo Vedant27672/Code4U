@@ -1,0 +1,52 @@
+class Solution {
+public: 
+    vector<vector<int>> generateMatrix(int n) {
+        vector <vector <int>> ans(n, vector <int> (n));
+        int element = 1;
+        int lr = 0;
+        int lc = 0;
+        int hr = n-1;
+        int hc = n-1;
+
+        while(lr<=hr || lc<=hc) {
+            //first row
+            if(lr<=hr) {
+                for(int j=lc; j<=hc; j++) {
+                    ans[lr][j] = element;
+                    element++;
+                }
+                lr++;
+            }
+
+            //last column 
+            if(lc<=hc) {
+                for(int i=lr; i<=hr; i++) {
+                    ans[i][hc] = element;
+                    element++;
+                }
+                hc--;
+            }
+
+            //last row
+            if(lr<=hr) {
+                for(int j=hc; j>=lc; j--) {
+                    ans[hr][j] = element;
+                    element++;
+                }
+                hr--;
+            }
+
+            //first column 
+            if(lc<=hc) {
+                for(int i=hr; i>=lr; i--) {
+                    ans[i][lc] = element;
+                    element++;
+                }
+                lc++;
+            }
+        }
+
+
+        return ans;
+    }
+};
